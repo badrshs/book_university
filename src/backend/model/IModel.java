@@ -19,8 +19,9 @@ public interface IModel<Base> {
 	Object find(int id) throws  ClassNotFoundException;
 	Object get() throws SQLException, ClassNotFoundException;
 	Object delete(int id) throws SQLException, ClassNotFoundException;
+	Object delete(int id,String column) throws SQLException, ClassNotFoundException;
 	Object update() throws SQLException, ClassNotFoundException;
-	
+ 	
 	
 	
 	

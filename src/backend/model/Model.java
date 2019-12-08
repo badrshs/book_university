@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.text.html.parser.Entity;
+
 import org.json.simple.*;
 import com.google.gson.Gson;
 
@@ -29,10 +31,11 @@ public class Model implements IModel {
 	}
 
 	public void setColumns(Field[] fields) {
-
 		for (Field field : fields) {
-			String n = field.getName();
-			fillable.add(n);
+			String n = field.getName();// this may case an issue
+			if (n.substring(1) != "_") {
+				fillable.add(n);
+			}
 		}
 		selectedColumns = String.join(" , ", fillable); // generate columns names
 	}
@@ -52,7 +55,7 @@ public class Model implements IModel {
 	private String generateQuery() {
 		return "select " + selectedColumns + " from " + table + " " + where + " ";
 	}
-
+	
 	public Model where(String columns, String condition, String value) {
 		where += "where " + columns + " " + condition + " " + value;
 		generateQuery();
@@ -77,7 +80,7 @@ public class Model implements IModel {
 	}
 
 	public Object find(int id) throws ClassNotFoundException {
-		where("id", "==", Integer.toString(id));
+		where("id", "=", Integer.toString(id));
 		return get();
 	}
 
@@ -105,7 +108,7 @@ public class Model implements IModel {
 
 			e.printStackTrace();
 		}
-		return new Gson().fromJson(arr.toString(),
+		return  new Gson().fromJson(arr.toString(),
 				Class.forName("[Lbackend.entity." + getClass().getName().replace("backend.model._", "") + ";"));
 	}
 
@@ -115,14 +118,22 @@ public class Model implements IModel {
 	}
 
 	@Override
-	public Object delete(int id) throws SQLException, ClassNotFoundException {
+	public Object delete(int id, String column) throws SQLException, ClassNotFoundException {
+		String query = "delete from " + table + " where " + column + " = " + id;
+		boolean result = db.createUpdaterStatement(query);
+		if (result) {
+			System.out.println(query + " deleted successfully");
+		}
+		return result;
+	}
 
+	@Override
+	public Object delete(int id) throws SQLException, ClassNotFoundException {
 		String query = "delete from " + table + " where id = " + id;
 		boolean result = db.createUpdaterStatement(query);
 		if (result) {
 			System.out.println(query + " deleted successfully");
 		}
-
 		return result;
 	}
 
@@ -131,56 +142,44 @@ public class Model implements IModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	private String CreateUpdateSqlStatment(Map<String, String> names,int id) {
-		
-		String query = "";
- 
-		for (Map.Entry<String, String> entry : names.entrySet()) {
-			query += '`' + entry.getKey() + "` = "+"'"+ entry.getValue() + "' ,";
-		}
-		
-		query = deleteLastCharacter(query);
 
-		query = "UPDATE `"+table+"` SET "+query+" WHERE `"+table+"`.`id` = "+id+";";
+	private String CreateUpdateSqlStatment(Map<String, String> names, int id) {
+		String query = "";
+		for (Map.Entry<String, String> entry : names.entrySet()) {
+			query += '`' + entry.getKey() + "` = " + "'" + entry.getValue() + "' ,";
+		}
+		query = deleteLastCharacter(query);
+		query = "UPDATE `" + table + "` SET " + query + " WHERE `" + table + "`.`id` = " + id + ";";
 		return query;
 	}
 
 	private String CreateInsertSqlStatment(Map<String, String> names) {
-
 		String keys = "";
 		String values = "";
 		for (Map.Entry<String, String> entry : names.entrySet()) {
 			keys += '`' + entry.getKey() + "` ,";
-			values += "'"+ entry.getValue() + "' ,";
+			values += "'" + entry.getValue() + "' ,";
 		}
-		
 		keys = deleteLastCharacter(keys);
 		values = deleteLastCharacter(values);
 
 		return "INSERT INTO `users`(" + keys + ") VALUES (" + values + ")";
 	}
-	
+
 	public Object create(Map<String, String> names) throws SQLException, ClassNotFoundException {
-		
 		String query = CreateInsertSqlStatment(names);
 		System.out.println(query);
-		
 		boolean result = db.createUpdaterStatement(query);
-
 		return result;
 	}
 
-	public Object update(Map<String, String> names,int id) throws SQLException, ClassNotFoundException {
-
+	public Object update(Map<String, String> names, int id) throws SQLException, ClassNotFoundException {
 		String query = CreateUpdateSqlStatment(names, id);
 		System.out.println(query);
-
 		boolean result = db.createUpdaterStatement(query);
 		if (result) {
 			System.out.println(query + " added successfully");
 		}
-
 		return result;
 	}
 

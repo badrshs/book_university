@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
+import backend.entity.Category;
 import backend.entity.Users;
 import backend.model._Category;
 import backend.model.Model;
@@ -27,9 +28,9 @@ import backend.model._Users;
 public class starter {
  
 	public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException, ClassNotFoundException, SQLException {
-		_Users usres = new _Users();
-		//Users[] user =   (Users[]) usres.get();
-		//System.out.println(user[0].name);
+		_Category _category = new _Category();
+		Category[] category =   (Category[]) _category.get();
+		System.out.println(category[0].GetBooks()[0]);
 		//`name`, `surname`, `email`, `password`, `created_at`, `card_n.umber`, `cvv_code`
 		/*
 		Map<String, String> names = new HashMap<>();		
@@ -42,9 +43,10 @@ public class starter {
 		 usres.create(names);
 
 		 */
+		/*
 		Map<String, String> names = new HashMap<>();		
 		 names.put("name", "badr123");
-		 usres.update(names,4);
+		 usres.update(names,4);*/
 
 		// usres.delete(2);
  		

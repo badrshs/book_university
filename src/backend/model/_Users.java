@@ -10,6 +10,7 @@ public class _Users extends Model {
 	
 	public _Users() throws ClassNotFoundException {
 		Field[] fields = Users.class.getFields();
+
 		init(fields);
 	}
 
