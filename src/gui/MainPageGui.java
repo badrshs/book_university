@@ -1,37 +1,15 @@
 package gui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
-
-import backend.controller.MainPage;
-import backend.entity.Category;
-
-import java.awt.Button;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Canvas;
-import java.awt.Label;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
-import java.awt.Panel;
-import java.awt.Font;
-import java.awt.Color;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.ScrollPaneConstants;
+import java.awt.EventQueue;
 
-public class MainPageGui extends JFrame {
+import backend.controller.MainPage;
 
-	private JPanel contentPanel;
+public class  MainPageGui extends JFrame {
+
 	public static JPanel jPanel;
 
 	/**
@@ -42,7 +20,7 @@ public class MainPageGui extends JFrame {
 			public void run() {
 				try {
 					MainPage.ShowMainPageController();
-
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -63,10 +41,16 @@ public class MainPageGui extends JFrame {
 		jPanel = new JPanel();
 		jPanel.setLayout(null);
 		jPanel.setBounds(0, 0, 1600, 800);
-
+		generateMenue();
 		add(jPanel);
-	
+
 	}
 
+	JMenu menu, submenu;
+	JMenuItem i1, i2, i3, i4, i5;
 
+	public void generateMenue() {
+		Menu mb = new Menu();
+		setJMenuBar(mb);
+	}
 }

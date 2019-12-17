@@ -57,11 +57,15 @@ public class Model implements IModel {
 	}
 	
 	public Model where(String columns, String condition, String value) {
-		where += "where " + columns + " " + condition + " " + value;
+		if(!where.contains("where"))
+			where+=" where ";
+		where +=  " " +  columns + " " + condition + " \"" + value +"\" " ;
 		generateQuery();
 		return this;
 	}
-
+	public Model where(String columns, String condition, int value) {	
+		return where( columns, condition,  Integer.toString(value)) ;
+	}
 	public Model and() {
 		where += " and ";
 		generateQuery();

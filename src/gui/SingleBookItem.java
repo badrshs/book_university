@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import backend.controller.Helper;
 import backend.controller.MainPage;
 import backend.entity.*;
 import java.awt.Font;
@@ -35,7 +36,6 @@ public class SingleBookItem extends JPanel {
 	private String writer;
 	private String category;
 
-//https://stackoverflow.com/a/34169084/3587326
 	public SingleBookItem(Book book) {
 		super();
 		setBackground(Color.GRAY);
@@ -101,34 +101,15 @@ public class SingleBookItem extends JPanel {
 			label.setFont(new Font("Tahoma", Font.BOLD, 20));
 			label.setBounds(65, 80, 79, 28);
 			panel.add(label);
-
-			JLabel lblImage = new JLabel("Image");
-			lblImage.setBounds(0, 0, 275, 138);
-			lblImage.setVerticalAlignment(SwingConstants.TOP);
-			lblImage.setBackground(Color.GRAY);
-			lblImage.setHorizontalAlignment(SwingConstants.CENTER);
-			ImageIcon imageIcon = new ImageIcon(fitimage(image, lblImage.getWidth()+20, lblImage.getHeight()));
-
-			lblImage.setIcon(imageIcon);
-			add(lblImage);
+			Component img = Helper.GenerateImage("C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg",275,138);
+			img.setBounds(0, 0, 275, 138);
+			add(img);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		SingleBookItem();
-	}
+ 	}
 
-	public void SingleBookItem() {
-
-	}
-
-	private Image fitimage(Image img, int w, int h) {
-		BufferedImage resizedimage = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = resizedimage.createGraphics();
-		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-		g2.drawImage(img, 0, 0, w, h, null);
-		g2.dispose();
-		return resizedimage;
-	}
+	
 }

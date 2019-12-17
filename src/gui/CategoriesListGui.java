@@ -12,6 +12,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import backend.controller.MainPage;
+import backend.entity.Book;
 import backend.entity.Category;
 
 public class CategoriesListGui extends JPanel {
@@ -23,6 +24,7 @@ public class CategoriesListGui extends JPanel {
 		setLayout(null);
 		setBounds(12, 100, 1600, 800);
 		add(GenerateCategories(categories));
+
 	}
 
 	
@@ -53,7 +55,10 @@ public class CategoriesListGui extends JPanel {
 		int height = 80;
 
 		for (int i = 0; i < categories.length; i++) {
-			Button categoryBotton = new Button(categories[i].name+" ("+categories[i].GetBooks().length+")");
+			int bookNumber = categories[i].GetBooks().length;
+			if(bookNumber==0)
+				continue;
+			Button categoryBotton = new Button(categories[i].name+" ("+bookNumber+")");
 			categoryBotton.setBounds(x, y, width, height);
 			final int index = i;
 			categoryBotton.setFont(new Font("Bahnschrift", Font.BOLD, 20));

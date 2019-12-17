@@ -2,7 +2,7 @@ package backend.entity;
 
 public class Users extends Base {
 	
-	int id;
+	public int id;
 	public String name;
 	public String surname;
 	public String email;
