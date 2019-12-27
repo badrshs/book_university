@@ -14,6 +14,7 @@ public class Validation {
 	public static final Pattern VALID_FOR_SQL_INJECTION = Pattern.compile("\b(ALTER|CREATE|DELETE|WHERE|DROP|EXEC(UTE){0,1}|INSERT( +INTO){0,1}|MERGE|SELECT|UPDATE|UNION( +ALL){0,1})\b",Pattern.CASE_INSENSITIVE);
 	public static final Pattern VALID_ONLY_FOR_A_Z_WITH_WHITE_SPACE = Pattern.compile("^[a-zA-Z\\s]*$",Pattern.CASE_INSENSITIVE);
 	public static final Pattern VALID_CARD_NUMBER = Pattern.compile("^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\\d{3})\\d{11})$",Pattern.CASE_INSENSITIVE);
+	public static final Pattern VALID_NUMBER = Pattern.compile("[0-9]+|\\d*\\.\\d+|\\d+\\.\\d*$",Pattern.CASE_INSENSITIVE);
  
 	public static boolean IsEmail(String emailStr) {
 		Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
@@ -55,6 +56,8 @@ public class Validation {
 	}
 	
 	public static boolean IsA_Z(String str) {
+		if(str.length()==0)
+			return false;
 		Matcher matcher = VALID_ONLY_FOR_A_Z_WITH_WHITE_SPACE.matcher(str);
 		return matcher.find();
 	}
@@ -64,5 +67,8 @@ public class Validation {
 		Matcher matcher = VALID_CARD_NUMBER.matcher(str);
 		return matcher.find();
 	}
-
+	public static boolean IsValidNumber(String str) {
+		Matcher matcher = VALID_NUMBER.matcher(str);
+		return matcher.find();
+	}
 }

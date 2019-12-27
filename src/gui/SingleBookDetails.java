@@ -30,7 +30,7 @@ public class SingleBookDetails extends JPanel {
 	 */
 	public SingleBookDetails(Book book) {
 		setLayout(null);
-		setBounds(12, 100, 1600, 800);
+		setBounds(12, 0, 1600, 800);
 
 		GenerateSingleBook(book);
 
@@ -57,23 +57,11 @@ public class SingleBookDetails extends JPanel {
 	}
 
 	private void GenerateSingleBook(Book book) {
-		JLabel lblBookPhoto = new JLabel("Book Photo");
-		lblBookPhoto.setForeground(Color.YELLOW);
-		lblBookPhoto.setBackground(Color.PINK);
-		lblBookPhoto.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookPhoto.setVerticalAlignment(SwingConstants.TOP);
-		lblBookPhoto.setBounds(12, 28, 321, 357);
-		add(lblBookPhoto);
 
-		try {
-			Component img = Helper.GenerateImage(
-					"C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg", 250, 400);
-			img.setBounds(50, 50, 250, 400);
-			add(img);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		Component img = Helper.GenerateImage(
+				"C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg", 250, 400);
+		img.setBounds(50, 50, 250, 400);
+		add(img);
 
 		Label labelName = new Label("Name");
 		labelName.setFont(new Font("Dialog", Font.BOLD, 18));

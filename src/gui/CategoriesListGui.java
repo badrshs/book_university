@@ -12,8 +12,12 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import backend.controller.MainPage;
+import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.Category;
+import javax.swing.JScrollBar;
+import java.awt.Canvas;
+import javax.swing.JSpinner;
 
 public class CategoriesListGui extends JPanel {
 
@@ -22,9 +26,8 @@ public class CategoriesListGui extends JPanel {
 	 */
 	public CategoriesListGui(Category[] categories) {
 		setLayout(null);
-		setBounds(12, 100, 1600, 800);
+		setBounds(0, 0, 1600, 800);
 		add(GenerateCategories(categories));
-
 	}
 
 	
@@ -52,29 +55,21 @@ public class CategoriesListGui extends JPanel {
 		int between_w = 70;
 		int between_h = 15;
 		int width = 240;
-		int height = 80;
+		int height = Auth.isAdmin()?120:80;
 
 		for (int i = 0; i < categories.length; i++) {
 			int bookNumber = categories[i].GetBooks().length;
-			if(bookNumber==0)
-				continue;
-			Button categoryBotton = new Button(categories[i].name+" ("+bookNumber+")");
+			/*if(bookNumber==0)
+				continue;*/
+			CategoryButton categoryBotton = new CategoryButton(categories[i]);
 			categoryBotton.setBounds(x, y, width, height);
-			final int index = i;
-			categoryBotton.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 			categoriesContainer.add(categoryBotton);
 			x += width + between_w;
 			if ((i + 1) % 5 == 0) {
 				y += height + between_h;
 				x = 15;
 			}
-			categoryBotton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent arg0) {
-					MainPage.ShowBooksPage(categories[index]);
-				}
-			});
 		}
 		return categoriesContainer;
 	}
-	
 }

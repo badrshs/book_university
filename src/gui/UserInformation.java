@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JTextField;
 
 import backend.controller.Helper;
+import backend.controller.MainPage;
 import backend.controller.Validation;
 import backend.entity.Auth;
 import backend.entity.Users;
@@ -116,6 +117,8 @@ public class UserInformation extends JPanel {
 					Auth.saveInformation(name.getText(), surname.getText(), email.getText(), password.getText(),
 							card_numb.getText(), cvv.getText());
 					Helper.showSuccess("UPDATED SUCCESSFULLY");
+					MainPage.mainPageGui.generateMenue(new Menu());
+
 				}
 
 			}
@@ -144,14 +147,14 @@ public class UserInformation extends JPanel {
 			Helper.showError("password must be at least 8 characters");
 			return false;
 
-		}else if((card_numb.getText().length() == 0 && cvv.getText().length() == 0)) {
+		} else if ((card_numb.getText().length() == 0 && cvv.getText().length() == 0)) {
 			return true;
-			
-		}else if (cvv.getText().length() != 3 ) {
+
+		} else if (cvv.getText().length() != 3) {
 			Helper.showError("cvv number must be 3 number");
 			return false;
 
-		} else if (card_numb.getText().length()!=16) {
+		} else if (card_numb.getText().length() != 16) {
 			Helper.showError(" card number is not valid ");
 			return false;
 		}

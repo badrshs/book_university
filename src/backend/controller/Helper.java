@@ -11,23 +11,31 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Helper {
-	public static Component GenerateImage(String imageUrl, int width, int height) throws IOException {
+	public static Component GenerateImage(String imageUrl, int width, int height) {
 
-		BufferedImage bufferedImage = ImageIO.read(new File(imageUrl));
-		JLabel image = new JLabel("Image");
-		image.setBounds(0, 0, width, height);
-		image.setVerticalAlignment(SwingConstants.TOP);
-		image.setBackground(Color.GRAY);
-		image.setHorizontalAlignment(SwingConstants.CENTER);
-		ImageIcon imageIcon = new ImageIcon(fitimage(bufferedImage, width + 20, height));
-		image.setIcon(imageIcon);
-		return image;
+		try {
+			BufferedImage bufferedImage = ImageIO.read(new File(imageUrl));
+			JLabel image = new JLabel("Image");
+			image.setBounds(0, 0, width, height);
+			image.setVerticalAlignment(SwingConstants.TOP);
+			image.setBackground(Color.GRAY);
+			image.setHorizontalAlignment(SwingConstants.CENTER);
+			ImageIcon imageIcon = new ImageIcon(fitimage(bufferedImage, width + 20, height));
+			image.setIcon(imageIcon);
+			return image;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+
+		}
 	}
 
 	private static Image fitimage(Image img, int w, int h) {
@@ -39,15 +47,29 @@ public class Helper {
 		g2.dispose();
 		return resizedimage;
 	}
-	
-	public static void showError(String message) {
-		
-			    JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
-			        JOptionPane.ERROR_MESSAGE);
+
+	public static String selectImage() {
+		// https://stackoverflow.com/questions/40255039/how-to-choose-file-in-java
+		JFileChooser chooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("JPG & GIF Images", "jpg", "gif");
+		chooser.setFileFilter(filter);
+		int returnVal = chooser.showOpenDialog(null);
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+
+			System.out.println("You chose to open this file: " + chooser.getSelectedFile().getAbsolutePath());
+			return chooser.getSelectedFile().getAbsolutePath();
+
+		}
+		return null;
 	}
+
+	public static void showError(String message) {
+
+		JOptionPane.showMessageDialog(new JFrame(), message, "Dialog", JOptionPane.ERROR_MESSAGE);
+	}
+
 	public static void showSuccess(String message) {
-		
-	    JOptionPane.showMessageDialog(new JFrame(), message, "Dialog",
-	        JOptionPane.INFORMATION_MESSAGE);
-}
+
+		JOptionPane.showMessageDialog(new JFrame(), message, "Dialog", JOptionPane.INFORMATION_MESSAGE);
+	}
 }

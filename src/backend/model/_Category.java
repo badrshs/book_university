@@ -9,8 +9,5 @@ public class _Category extends Model {
 		Field[] fields = Category.class.getFields();
 		init(fields);
 	}
-	
-	
 
-	
 }

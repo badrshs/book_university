@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import backend.controller.AdminController;
 import backend.controller.Helper;
 import backend.controller.MainPage;
 import backend.entity.*;
@@ -26,15 +27,9 @@ import java.awt.Component;
 import java.awt.Rectangle;
 import javax.swing.JTextPane;
 import java.awt.Panel;
+import javax.swing.JButton;
 
 public class SingleBookItem extends JPanel {
-	private String photo;
-	private String title;
-	private double price;
-	private int quantity;
-	private int in_stock;
-	private String writer;
-	private String category;
 
 	public SingleBookItem(Book book) {
 		super();
@@ -47,39 +42,38 @@ public class SingleBookItem extends JPanel {
 
 			JPanel panel = new JPanel();
 			panel.setBackground(Color.WHITE);
-			panel.setBounds(0, 138, 275, 112);
+			panel.setBounds(0, 138, 275, 115);
 			add(panel);
 			panel.setLayout(null);
-			
+
 			Panel panel_1 = new Panel();
 			panel_1.setBounds(0, 0, 59, 112);
 			panel.add(panel_1);
 			panel_1.setLayout(null);
-			
+
 			JLabel bookNameLabel = new JLabel("Name");
 			bookNameLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-			bookNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			bookNameLabel.setBounds(5, 0, 54, 41);
+			bookNameLabel.setBounds(5, 0, 54, 24);
 			panel_1.add(bookNameLabel);
-			
+
 			JLabel writerLabel = new JLabel("Writer");
 			writerLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			writerLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-			writerLabel.setBounds(5, 35, 54, 41);
+			writerLabel.setBounds(5, 34, 54, 33);
 			panel_1.add(writerLabel);
-			
+
 			JLabel priceLabel = new JLabel("Price");
 			priceLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			priceLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
-			priceLabel.setBounds(5, 75, 54, 41);
+			priceLabel.setBounds(5, 75, 54, 24);
 			panel_1.add(priceLabel);
-			
-			JTextPane bookName = new JTextPane();
-			bookName.setText("Read Alikes for Our 2019 Podcast Reads");
-			bookName.setEditable(false);
-			bookName.setBounds(59, 0, 204, 43);
-			panel.add(bookName);
-			
+
+			JTextPane name = new JTextPane();
+			name.setText(book.name);
+			name.setEditable(false);
+			name.setBounds(59, 0, 204, 33);
+			panel.add(name);
+
 			Button button = new Button("Details");
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -89,27 +83,36 @@ public class SingleBookItem extends JPanel {
 			button.setFont(new Font("Dialog", Font.BOLD, 15));
 			button.setBounds(186, 73, 79, 33);
 			panel.add(button);
-			
-			JTextPane textPane = new JTextPane();
-			textPane.setText("Read Alikes for Our 2019 Podcast Reads");
-			textPane.setEditable(false);
-			textPane.setBounds(59, 42, 204, 33);
-			panel.add(textPane);
-			
-			JLabel label = new JLabel("500$");
-			label.setHorizontalAlignment(SwingConstants.LEFT);
-			label.setFont(new Font("Tahoma", Font.BOLD, 20));
-			label.setBounds(65, 80, 79, 28);
-			panel.add(label);
-			Component img = Helper.GenerateImage("C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg",275,138);
+
+			JTextPane writer = new JTextPane();
+			writer.setText(book.writer);
+			writer.setEditable(false);
+			writer.setBounds(59, 42, 204, 33);
+			panel.add(writer);
+			JLabel price = new JLabel(book.price+"$");
+			price.setHorizontalAlignment(SwingConstants.LEFT);
+			price.setFont(new Font("Tahoma", Font.BOLD, 20));
+			price.setBounds(65, 73, 79, 28);
+			panel.add(price);
+			Component img = Helper.GenerateImage(
+					"C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg", 275, 138);
 			img.setBounds(0, 0, 275, 138);
 			add(img);
+
+			JButton btnNewButton = new JButton("edit");
+			btnNewButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					AdminController.EditBook(book);
+				}
+			});
+			btnNewButton.setBounds(0, 252, 137, 25);
+			add(btnNewButton);
+
+			JButton btnDelete = new JButton("delete");
+			btnDelete.setBounds(138, 252, 137, 25);
+			add(btnDelete);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
- 	}
-
-	
+	}
 }

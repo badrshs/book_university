@@ -39,6 +39,6 @@ public class Category {
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + ", books=" + Arrays.toString(books) + "]";
+		return name;
 	}
 }

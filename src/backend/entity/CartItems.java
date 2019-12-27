@@ -9,7 +9,7 @@ public class CartItems {
 
 	public CartItems(Book book, int quantity) {
 		book_id = book.id;
-		this.quantity = book.quantity;
+		this.quantity = quantity;
 		user_id = Auth.isAuth ? Auth.users.id : -1;
 		_User = Auth.isAuth ? Auth.users : null;
 		_Book = book;

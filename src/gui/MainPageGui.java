@@ -2,6 +2,8 @@ package gui;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.EventQueue;
@@ -11,7 +13,8 @@ import backend.controller.MainPage;
 public class  MainPageGui extends JFrame {
 
 	public static JPanel jPanel;
-
+	public static Menu  MainMenu;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -19,8 +22,7 @@ public class  MainPageGui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainPage.ShowMainPageController();
-					
+					MainPage.ShowMainPageController();	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -28,9 +30,6 @@ public class  MainPageGui extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public MainPageGui() {
 		setLayout(null);
 		setVisible(true);
@@ -41,16 +40,17 @@ public class  MainPageGui extends JFrame {
 		jPanel = new JPanel();
 		jPanel.setLayout(null);
 		jPanel.setBounds(0, 0, 1600, 800);
-		generateMenue();
+		jPanel.setVisible(true);
+		 generateMenue(new Menu());
 		add(jPanel);
-
 	}
 
 	JMenu menu, submenu;
 	JMenuItem i1, i2, i3, i4, i5;
 
-	public void generateMenue() {
-		Menu mb = new Menu();
-		setJMenuBar(mb);
+	public void generateMenue( Menu menu) {
+ 		setJMenuBar(menu);
+ 		revalidate();
+		repaint();
 	}
 }

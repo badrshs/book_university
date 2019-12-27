@@ -9,7 +9,7 @@ public class Book extends Base{
 	public int quantity ;
 	public int in_stock ;
 	public int category_id ;
-	public double price ;
+	public int price ;
 	public String description ;
 	public String name ;
 	public String photo ;

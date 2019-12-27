@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import backend.model._Book;
-import backend.model._Cart;
+import backend.model._CartItems;
 
 public class MainCart {
 
@@ -38,7 +38,7 @@ public class MainCart {
 			return;
 		}
 		try {
-			_Cart _cart = new _Cart();
+			_CartItems _cart = new _CartItems();
 			CartItems[] cart = (CartItems[]) _cart.where("user_id", "=", Auth.users.id).get();
 			String list = "";
 			for (CartItems item : cart) {
@@ -72,6 +72,9 @@ public class MainCart {
 
 	private static Book[] getBookByList(String list) { // انا وقفت عند اضافة غرض عالسلة شكلو في مشكلة راجع الديبوج تصبح عخير
 		try {
+			if(list=="")
+				return null;
+			
 			_Book _books = new _Book();
 			return (Book[]) _books.where("id", " IN ", "(" + list + ")").get();
 

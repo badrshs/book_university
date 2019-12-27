@@ -10,6 +10,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import backend.controller.MainPage;
+import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.Category;
 
@@ -20,9 +21,8 @@ public class BooksListGui extends JPanel {
 	 */
 	public BooksListGui(Category category) {
 		setLayout(null);
-		setBounds(12, 100, 1600, 800);
+		setBounds(0, 0, 1600, 800);
 		add(generateBooksList(category.GetBooks()));
-
 	}
 
 	public JPanel generateBooksList(Book[] books) {
@@ -35,10 +35,10 @@ public class BooksListGui extends JPanel {
 		int between_w = 25;
 		int between_h = 15;
 		int width = 275;
-		int height = 250;
+		int height = Auth.isAdmin()?277:250;
 		 JPanel book_box ;
-		for (int i = 0; i < 10; i++) {
-			book_box = new SingleBookItem(books[0]);
+		for (int i = 0; i < books.length; i++) {
+			book_box = new SingleBookItem(books[i]);
 			book_box.setBounds(x, y, width, height);
 			final int index = 0;
 			categoriesContainer.add(book_box);

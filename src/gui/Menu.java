@@ -11,7 +11,10 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
+import backend.controller.AdminController;
 import backend.controller.MainPage;
 import backend.entity.Auth;
 
@@ -24,13 +27,24 @@ public class Menu extends JMenuBar {
 	}
 
 	JMenu menu;
-	JMenuButton login, mainPage, exit, cart, categoryList;
+	public  boolean addCategoryStatus = false;
+	public static JMenuButton login, mainPage, exit, cart, categoryList, addCategory;
 	JMenuItem logout, userInfo;
+
 	public Menu() {
+		generateMenue();
+	}
+
+	public Menu(int fresh) {
+	}
+	public void generateMenue() {
 		setPreferredSize(new Dimension(100, 40));
 		generateUserInfo();
 		generateLogin();
 		generateCategoriesList();
+		if(addCategoryStatus) {
+			generateAddCategory();
+		}
 		generateExit();
 	}
 
@@ -39,7 +53,7 @@ public class Menu extends JMenuBar {
 		categoryList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					MainPage.ShowMainPageController();
+				MainPage.ShowMainPageController();
 			}
 		});
 		add(categoryList);
@@ -47,25 +61,36 @@ public class Menu extends JMenuBar {
 
 	private void generateExit() {
 		exit = new JMenuButton("Exit");
+		exit.setBounds(1000, 0, 100, 40);
 		exit.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				System.exit(0);
 			}
 		});
 		add(exit);
 	}
-
-
 
 	private void generateLogin() {
 		if (!Auth.isAuth) {
 			login = new JMenuButton("Login");
 			login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MainPage.ShowLoginPage();}
+					MainPage.ShowLoginPage();
+				}
 			});
 			add(login);
+		}
+	}
+
+	public void generateAddCategory() {
+		if (Auth.isAdmin()) {
+			addCategory = new JMenuButton("Add New Category");
+			addCategory.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AdminController.AddCategory();
+				}
+			});
+			add(addCategory);
 		}
 	}
 
@@ -73,29 +98,20 @@ public class Menu extends JMenuBar {
 		if (Auth.isAuth) {
 			menu = new JMenu(Auth.users.name + " " + Auth.users.surname);
 			menu.setFont(new Font("Arial", Font.PLAIN, 22));
-
 			userInfo = new JMenuItem("My Information");
 			userInfo.setFont(new Font("Arial", Font.PLAIN, 18));
 			userInfo.addActionListener(new ActionListener() {
-
-				@Override
 				public void actionPerformed(ActionEvent e) {
-
 					MainPage.ShowUserInformationPage();
 				}
 			});
-
 			logout = new JMenuItem("Logout");
 			logout.setFont(new Font("Arial", Font.PLAIN, 18));
 			logout.addActionListener(new ActionListener() {
-
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					Auth.logout();
-
 				}
 			});
-
 			menu.add(userInfo);
 			menu.add(logout);
 			add(menu);

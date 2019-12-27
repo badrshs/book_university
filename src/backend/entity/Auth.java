@@ -18,6 +18,12 @@ public class Auth {
 		this.users = users;
 		isAuth = true;
 	}
+	
+	public static boolean isAdmin() {
+		if(!isAuth)
+			return false;
+		return users.is_admin == 1 ;
+	}
 
 	public Users getAuth() {
 		return users;
