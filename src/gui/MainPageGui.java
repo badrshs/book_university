@@ -14,21 +14,6 @@ public class  MainPageGui extends JFrame {
 
 	public static JPanel jPanel;
 	public static Menu  MainMenu;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainPage.ShowMainPageController();	
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public MainPageGui() {
 		setLayout(null);

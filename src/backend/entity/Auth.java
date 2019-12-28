@@ -18,44 +18,39 @@ public class Auth {
 		this.users = users;
 		isAuth = true;
 	}
-	
+
+	public static int id() {
+		if (!isAuth)
+			return -1;
+		return users.id;
+	}
+
 	public static boolean isAdmin() {
-		if(!isAuth)
+		if (!isAuth)
 			return false;
-		return users.is_admin == 1 ;
+		return users.is_admin == 1;
 	}
 
 	public Users getAuth() {
 		return users;
 	}
-	
+
 	public static void saveInformation(String name, String surname, String email, String password, String card_num,
 			String cvv) {
-		_Users _user;
-		try {
-			_user = new _Users();
-
+		_Users _user = new _Users();
 		Map<String, String> user = new HashMap<>();
 		user.put("name", name);
 		user.put("surname", surname);
-		user.put("email",  email);
+		user.put("email", email);
 		user.put("password", password);
-		if(card_num.length()==16)
+		if (card_num.length() == 16)
 			user.put("card_number", card_num);
-		if(cvv.length()==3)
+		if (cvv.length() == 3)
 			user.put("cvv_code", cvv);
-		_user.update(user,users.id);
+		_user.update(user, users.id);
 		refresh();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
-	
-	
+
 	public static void refresh() {
 		try {
 			_Users _user = new _Users();
@@ -64,14 +59,14 @@ public class Auth {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public Auth(String email, String password) {
 		this.email = email;
 		this.password = password;
 	}
-	
+
 	public boolean check() {
 		try {
 			_Users _user = new _Users();
@@ -82,7 +77,6 @@ public class Auth {
 				MainCart.RefreshUserIdAfterSuccessfullyLogin();
 				return true;
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

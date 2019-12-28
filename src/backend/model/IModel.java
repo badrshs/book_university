@@ -1,5 +1,6 @@
 package backend.model;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,12 +16,11 @@ public interface IModel<Base> {
 	IModel where(String columns,String condition,String value);
 	IModel and();
 	IModel or();
-	Object first() throws  ClassNotFoundException;;
-	Object find(int id) throws  ClassNotFoundException;
-	Object get() throws SQLException, ClassNotFoundException;
-	Object delete(int id) throws SQLException, ClassNotFoundException;
-	Object delete(int id,String column) throws SQLException, ClassNotFoundException;
-	Object update() throws SQLException, ClassNotFoundException;
+	Object first();
+	Object find(int id);
+	Object get();
+	boolean delete(int id);
+	Object delete(int id,String column);
  	
 	
 	

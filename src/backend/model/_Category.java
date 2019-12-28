@@ -5,7 +5,7 @@ import backend.entity.*;
 
 public class _Category extends Model {
 
-	public _Category() throws ClassNotFoundException {
+	public _Category()  {
 		Field[] fields = Category.class.getFields();
 		init(fields);
 	}

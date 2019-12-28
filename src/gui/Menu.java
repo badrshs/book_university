@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 import backend.controller.AdminController;
 import backend.controller.MainPage;
 import backend.entity.Auth;
+import backend.entity.MainCart;
 
 public class Menu extends JMenuBar {
 	class JMenuButton extends JButton {
@@ -42,6 +43,7 @@ public class Menu extends JMenuBar {
 		generateUserInfo();
 		generateLogin();
 		generateCategoriesList();
+		generateCart();
 		if(addCategoryStatus) {
 			generateAddCategory();
 		}
@@ -70,6 +72,19 @@ public class Menu extends JMenuBar {
 		add(exit);
 	}
 
+	private void generateCart() {
+		String number = "( "+MainCart.cartItems.size()+" )";
+		
+		cart = new JMenuButton("My Cart "+number);
+		cart.setBounds(1000, 0, 100, 40);
+		cart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainPage.ShowCartDetails();
+
+			}
+		});
+		add(cart);
+	}
 	private void generateLogin() {
 		if (!Auth.isAuth) {
 			login = new JMenuButton("Login");

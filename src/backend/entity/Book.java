@@ -2,11 +2,8 @@ package backend.entity;
 
 public class Book extends Base{
 
-	/*`id`, `name`, `description`, `category_id`, `photo`, `writer`, `quantity`, `in_stock`, `price
- * 
- */
+
 	public int id ;
-	public int quantity ;
 	public int in_stock ;
 	public int category_id ;
 	public int price ;
@@ -18,7 +15,7 @@ public class Book extends Base{
 	
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", quantity=" + quantity + ", in_stock=" + in_stock + ", category_id=" + category_id
+		return "Book [id=" + id + ", in_stock=" + in_stock + ", category_id=" + category_id
 				+ ", price=" + price + ", description=" + description + ", name=" + name + ", photo=" + photo
 				+ ", writer=" + writer + "]";
 	}

@@ -5,6 +5,7 @@ import java.awt.Color;
 import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.Category;
+import backend.entity.MainCart;
 import backend.model._Book;
 import backend.model._Category;
 import gui.BooksListGui;
@@ -22,7 +23,7 @@ public class MainPage {
 
 	public static void ShowMainPageController() {
 		try {
-			 new Auth("shs1bader@gmail.com","shs1bader@gmail.com").check();
+			 //new Auth("shs1bader@gmail.com","shs1bader@gmail.com").check();
 			_Category _category = new _Category();
 			Category[] categories = (Category[]) _category.get();
 			if (mainPageGui == null) {
@@ -78,13 +79,16 @@ public class MainPage {
 		}
 	}
 
-	public static void ShowCartDetails() {
-		mainPageGui = new MainPageGui();
 
-		CartGui cart = new CartGui();
-		cart.setBounds(10, 10, 800, 1000);
-		MainPageGui.jPanel.add(cart);
+	public static void ShowCartDetails() {
+		MainPageGui.jPanel.removeAll();
+		Menu menu = new Menu(0);
+		menu.addCategoryStatus = true;
+		menu.generateMenue();
+		mainPageGui.generateMenue(menu);
+		MainPageGui.jPanel.add(new CartGui());
 		mainPageGui.repaint();
+		mainPageGui.revalidate();
 
 	}
 

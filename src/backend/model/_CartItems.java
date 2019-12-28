@@ -5,7 +5,7 @@ import backend.entity.CartItems;
 public class _CartItems extends Model{
 
  	
-	public _CartItems() throws ClassNotFoundException {
+	public _CartItems()  {
 		table ="Cart";
 		Field[] fields = CartItems.class.getFields();
 		init(fields);

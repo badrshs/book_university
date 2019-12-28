@@ -25,25 +25,19 @@ import java.awt.event.ActionEvent;
 
 public class SingleBookDetails extends JPanel {
 
-	/**
-	 * Create the panel.
-	 */
 	public SingleBookDetails(Book book) {
 		setLayout(null);
 		setBounds(12, 0, 1600, 800);
-
 		GenerateSingleBook(book);
-
-		JSpinner spinner = new JSpinner();
-		spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-		spinner.setFont(new Font("Tahoma", Font.BOLD, 28));
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 0, book.in_stock, 1));
+ 		spinner.setFont(new Font("Tahoma", Font.BOLD, 28));
 		spinner.setBounds(1130, 493, 103, 80);
 		add(spinner);
 
 		Button button = new Button("Add To Cart");
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if ((int) spinner.getValue() > 0) {
+				if ((int) spinner.getValue() > 0 && (int)spinner.getValue()<=book.in_stock) {
 					MainCart.addNewItemByProduct(book, (int) spinner.getValue());
 					MainPage.ShowCartDetails();
 				}
@@ -53,13 +47,11 @@ public class SingleBookDetails extends JPanel {
 		button.setFont(new Font("Dialog", Font.BOLD, 21));
 		button.setBounds(1251, 493, 143, 80);
 		add(button);
-
 	}
-
+	
 	private void GenerateSingleBook(Book book) {
-
 		Component img = Helper.GenerateImage(
-				"C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg", 250, 400);
+				book.photo, 250, 400);
 		img.setBounds(50, 50, 250, 400);
 		add(img);
 
@@ -73,10 +65,10 @@ public class SingleBookDetails extends JPanel {
 		WriterLabel.setBounds(339, 126, 79, 46);
 		add(WriterLabel);
 
-		Label quantityLabel = new Label("quantity");
-		quantityLabel.setFont(new Font("Dialog", Font.BOLD, 18));
-		quantityLabel.setBounds(340, 193, 79, 46);
-		add(quantityLabel);
+		Label InStockLabel = new Label("In Stock  ");
+		InStockLabel.setFont(new Font("Dialog", Font.BOLD, 18));
+		InStockLabel.setBounds(340, 193, 79, 46);
+		add(InStockLabel);
 
 		Label priceLabel = new Label("price");
 		priceLabel.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -102,12 +94,12 @@ public class SingleBookDetails extends JPanel {
 		writerDetials.setBounds(437, 126, 959, 54);
 		add(writerDetials);
 
-		JTextPane quantityDetails = new JTextPane();
-		quantityDetails.setText("--" + book.quantity + "--");
-		quantityDetails.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		quantityDetails.setEditable(false);
-		quantityDetails.setBounds(437, 193, 959, 54);
-		add(quantityDetails);
+		JTextPane inStockDetails = new JTextPane();
+		inStockDetails.setText( Integer.toString(book.in_stock) );
+		inStockDetails.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		inStockDetails.setEditable(false);
+		inStockDetails.setBounds(437, 193, 959, 54);
+		add(inStockDetails);
 
 		JTextPane priceDetails = new JTextPane();
 		priceDetails.setText(book.price + "TL");
@@ -123,5 +115,4 @@ public class SingleBookDetails extends JPanel {
 		descriptionDetials.setBounds(437, 333, 959, 133);
 		add(descriptionDetials);
 	}
-
 }

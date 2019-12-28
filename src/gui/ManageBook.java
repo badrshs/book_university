@@ -38,7 +38,6 @@ public class ManageBook extends JDialog implements ActionListener {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField name;
 	private JTextField writer;
-	private JSpinner quantity;
 	private JSpinner price;
 	private Category[] categories;
 	private JComboBox category;
@@ -52,14 +51,8 @@ public class ManageBook extends JDialog implements ActionListener {
 	}
 
 	private Category[] getAllCategory() {
-		_Category _category;
-		try {
-			_category = new _Category();
-			return (Category[]) _category.get();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			return null;
-		}
+		_Category _category = new _Category();
+		return (Category[]) _category.get();
 	}
 
 	private int getSelectedCategory(int id) {
@@ -112,20 +105,10 @@ public class ManageBook extends JDialog implements ActionListener {
 		separator_2.setBounds(22, 280, 418, 11);
 		contentPanel.add(separator_2);
 
-		JLabel lblQuantitylbl = new JLabel("description");
-		lblQuantitylbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblQuantitylbl.setBounds(22, 144, 95, 35);
-		contentPanel.add(lblQuantitylbl);
-
-		quantity = new JSpinner();
-		quantity.setValue(book.quantity);
-		quantity.setBounds(301, 434, 104, 40);
-		contentPanel.add(quantity);
-
-		JLabel lblQuantity = new JLabel("quantity");
-		lblQuantity.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblQuantity.setBounds(209, 435, 70, 35);
-		contentPanel.add(lblQuantity);
+		JLabel lblDescriptionlbl = new JLabel("description");
+		lblDescriptionlbl.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDescriptionlbl.setBounds(22, 144, 95, 35);
+		contentPanel.add(lblDescriptionlbl);
 
 		price = new JSpinner();
 		price.setBounds(301, 370, 104, 40);
@@ -193,7 +176,6 @@ public class ManageBook extends JDialog implements ActionListener {
 						data.put("name", name.getText());
 						data.put("writer", writer.getText());
 						data.put("description", description.getText());
-						data.put("quantity", quantity.getValue().toString());
 						data.put("price", price.getValue().toString());
 						data.put("in_stock", InStock.getValue().toString());
 						data.put("category_id", Integer.toString(categories[category.getSelectedIndex()].id));
@@ -243,14 +225,6 @@ public class ManageBook extends JDialog implements ActionListener {
 			return false;
 		} else if (!Validation.IsA_Z(data.get("description"))) {
 			Helper.showError("can't validate description text");
-
-			return false;
-		} else if (!Validation.IsValidNumber(data.get("quantity"))) {
-			Helper.showError("can't validate quantity number");
-
-			return false;
-		} else if (!Validation.IsValidNumber(data.get("price"))) {
-			Helper.showError("can't validate price number");
 
 			return false;
 		} else if (!Validation.IsValidNumber(data.get("in_stock"))) {

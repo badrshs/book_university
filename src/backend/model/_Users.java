@@ -8,7 +8,7 @@ import backend.entity.Users;
 public class _Users extends Model {
 	
 	
-	public _Users() throws ClassNotFoundException {
+	public _Users()  {
 		Field[] fields = Users.class.getFields();
 
 		init(fields);

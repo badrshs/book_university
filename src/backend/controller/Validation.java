@@ -22,32 +22,19 @@ public class Validation {
 	}
 
 	public static boolean IsEmailTaken(String emailStr) {
-		try {
-			_Users _user = new _Users();
-			_Users[] user = (_Users[]) _user.where("email", "=", emailStr).first();
+		_Users _user = new _Users();
+		_Users[] user = (_Users[]) _user.where("email", "=", emailStr).first();
 
-			return !(user.length > 0);
-
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
+		return !(user.length > 0);
 	}
 
 	public static boolean IsEmaiTaken(String emailStr, int userId) {
-		try {
-			_Users _user = new _Users();
-			Users[] user = (Users[]) _user.where("email", "=", emailStr).and()
-					.where("id", "!=", Integer.toString(userId)).first();
+		_Users _user = new _Users();
+		Users[] user = (Users[]) _user.where("email", "=", emailStr).and()
+				.where("id", "!=", Integer.toString(userId)).first();
 
-			return !(user.length > 0);
+		return !(user.length > 0);
 
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
 	}
 	
 	public static boolean IsSafe(String str) {

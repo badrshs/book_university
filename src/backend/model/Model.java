@@ -11,6 +11,7 @@ import javax.swing.text.html.parser.Entity;
 
 import org.json.simple.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import backend.entity.Users;
 
@@ -41,7 +42,7 @@ public class Model implements IModel {
 		selectedColumns = String.join(" , ", fillable); // generate columns names
 	}
 
-	public void init(Field[] fields) throws ClassNotFoundException {
+	public void init(Field[] fields) {
 		setColumns(fields);
 	}
 
@@ -56,18 +57,36 @@ public class Model implements IModel {
 	private String generateQuery() {
 		return "select " + selectedColumns + " from " + table + " " + where + " ";
 	}
-	
+
 	public Model where(String columns, String condition, String value) {
-		if(!where.contains("where"))
-			where+=" where ";
+		if (!where.contains("where"))
+			where += " where ";
 		values.add(value);
-		where +=  " " +  columns + " " + condition + " ? " ;
+		where += " " + columns + " " + condition + "( ? )";
 		generateQuery();
 		return this;
 	}
-	public Model where(String columns, String condition, int value) {	
-		return where( columns, condition,  Integer.toString(value)) ;
+
+	public Model whereIn(String columns, String list) {
+		if (!where.contains("where"))
+			where += " where ";
+		String[] Ids = list.split(",");
+		String keys = "";
+
+		for (String id : Ids) {
+			values.add(id);
+			keys = keys + "?,";
+		}
+		keys = deleteLastCharacter(keys);
+		where += " " + columns + " " + "IN" + "( " + keys + " )";
+		generateQuery();
+		return this;
 	}
+
+	public Model where(String columns, String condition, int value) {
+		return where(columns, condition, Integer.toString(value));
+	}
+
 	public Model and() {
 		where += " and ";
 		generateQuery();
@@ -80,23 +99,21 @@ public class Model implements IModel {
 		return this;
 	}
 
-	public Object first() throws ClassNotFoundException {
+	public Object first() {
 		tail += " limit 1";
 		return get();
 	}
 
-	public Object find(int id) throws ClassNotFoundException {
+	public Object find(int id) {
 		where("id", "=", Integer.toString(id));
 		return get();
 	}
 
-	public Object get() throws ClassNotFoundException {
+	public Object get() {
 		ArrayList<JSONObject> arr = new ArrayList<JSONObject>();
+		String query = generateQuery();
 		try {
-			String query = generateQuery();
-			System.out.println(" Test :  " + query);
-
-			ResultSet resultSet = db.createReaderStatement(query,values);
+			ResultSet resultSet = db.createReaderStatement(query, values);
 			while (resultSet.next()) {
 				JSONObject array = new JSONObject();
 				fillable.forEach((v) -> {
@@ -109,15 +126,14 @@ public class Model implements IModel {
 				});
 				arr.add(array);
 			}
+			String model = "[Lbackend.entity." + getClass().getName().replace("backend.model._", "") + ";";
+			return new Gson().fromJson(arr.toString(), Class.forName(model));
 
-		} catch (SQLException e) {
-
+		} catch (SQLException | JsonSyntaxException | ClassNotFoundException e) {
+			System.out.println(query);
 			e.printStackTrace();
-		}	
-		String  model= "[Lbackend.entity." + getClass().getName().replace("backend.model._", "") + ";";
-System.out.println(model);
-		return  new Gson().fromJson(arr.toString(),
-				Class.forName(model));
+			return new Object();
+		}
 	}
 
 	@Override
@@ -125,32 +141,17 @@ System.out.println(model);
 		return generateQuery();
 	}
 
-	@Override
-	public Object delete(int id, String column) throws SQLException, ClassNotFoundException {
+	public Object delete(int id, String column) {
 		String query = "delete from " + table + " where " + column + " = ?";
 		values.add(Integer.toString(id));
-		boolean result = db.createUpdaterStatement(query,values);
-		if (result) {
-			System.out.println(query + " deleted successfully");
-		}
+		boolean result = db.createUpdaterStatement(query, values);
 		return result;
 	}
 
-	@Override
-	public Object delete(int id) throws SQLException, ClassNotFoundException {
+	public boolean delete(int id) {
 		String query = "delete from " + table + " where id = ?";
 		values.add(Integer.toString(id));
-		boolean result = db.createUpdaterStatement(query,values);
-		if (result) {
-			System.out.println(query + " deleted successfully");
-		}
-		return result;
-	}
-
-	@Override
-	public Object update() throws SQLException, ClassNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return db.createUpdaterStatement(query, values);
 	}
 
 	private String CreateUpdateSqlStatment(Map<String, String> names, int id) {
@@ -174,24 +175,18 @@ System.out.println(model);
 		}
 		keys = deleteLastCharacter(keys);
 		values = deleteLastCharacter(values);
-
-		return "INSERT INTO `"+table+"`(" + keys + ") VALUES (" + values + ")";
+		return "INSERT INTO `" + table + "`(" + keys + ") VALUES (" + values + ")";
 	}
 
-	public Object create(Map<String, String> names) throws SQLException, ClassNotFoundException {
+	public Object create(Map<String, String> names) {
 		String query = CreateInsertSqlStatment(names);
-		System.out.println(query);
-		boolean result = db.createUpdaterStatement(query,values);
+		boolean result = db.createUpdaterStatement(query, values);
 		return result;
 	}
 
-	public Object update(Map<String, String> names, int id) throws SQLException, ClassNotFoundException {
-		String query = CreateUpdateSqlStatment(names, id);
-		System.out.println(query);
-		boolean result = db.createUpdaterStatement(query,values);
-		if (result) {
-			System.out.println(query + " added successfully");
-		}
+	public Object update(Map<String, String> data, int id) {
+		String query = CreateUpdateSqlStatment(data, id);
+		boolean result = db.createUpdaterStatement(query, values);
 		return result;
 	}
 
