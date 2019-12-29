@@ -13,7 +13,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import backend.controller.Helper;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Book;
 import backend.entity.CartItems;
 import backend.entity.MainCart;
@@ -28,6 +28,8 @@ import java.awt.event.ActionEvent;
 public class SingleCartItem extends JPanel {
 
 	public SingleCartItem(Book book, CartItems item) {
+		if(book.in_stock<=0)
+			return;
 		setBackground(SystemColor.controlHighlight);
 		setLayout(null);
 		setBounds(0, 0, 995, 151);
@@ -51,7 +53,7 @@ public class SingleCartItem extends JPanel {
 		quantity.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		quantity.setBounds(693, 24, 35, 52);
 		add(quantity);
-		JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 0, book.in_stock, 1) );
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 1, book.in_stock, 1) );
 		spinner.setBounds(794, 35, 35, 35);
 		spinner.setValue(item.quantity);
 		spinner.setVisible(true);
@@ -60,6 +62,7 @@ public class SingleCartItem extends JPanel {
 				quantity.setText(spinner.getValue() + "");
 				price.setText(book.price * (int) spinner.getValue() + "$");
 				MainCart.UpdateValueOfSpesificItem((int) spinner.getValue(),item.id);
+				Payment.price.setText(MainCart.calculateTotalPrice()+"$");;
 			}
 		});
 		
@@ -69,7 +72,7 @@ public class SingleCartItem extends JPanel {
 		DELETE.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MainCart.deleteSpesificItem(book.id);
-				MainPage.ShowCartDetails();
+				Router.ShowCartDetails();
 			}
 		});
 		DELETE.setBounds(924, 13, 59, 52);

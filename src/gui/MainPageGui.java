@@ -8,7 +8,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.EventQueue;
 
-import backend.controller.MainPage;
+import backend.controller.Router;
+import backend.entity.MainCart;
 
 public class  MainPageGui extends JFrame {
 
@@ -28,6 +29,7 @@ public class  MainPageGui extends JFrame {
 		jPanel.setVisible(true);
 		 generateMenue(new Menu());
 		add(jPanel);
+
 	}
 
 	JMenu menu, submenu;

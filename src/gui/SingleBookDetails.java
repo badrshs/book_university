@@ -5,7 +5,7 @@ import java.awt.Component;
 import javax.swing.JPanel;
 
 import backend.controller.Helper;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.MainCart;
@@ -29,29 +29,36 @@ public class SingleBookDetails extends JPanel {
 		setLayout(null);
 		setBounds(12, 0, 1600, 800);
 		GenerateSingleBook(book);
-		JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 0, book.in_stock, 1));
- 		spinner.setFont(new Font("Tahoma", Font.BOLD, 28));
-		spinner.setBounds(1130, 493, 103, 80);
-		add(spinner);
+		if (book.in_stock != 0) {
+			JSpinner spinner = new JSpinner(new SpinnerNumberModel(1, 0, book.in_stock, 1));
+			spinner.setFont(new Font("Tahoma", Font.BOLD, 28));
+			spinner.setBounds(1130, 493, 103, 80);
+			add(spinner);
+			Button button = new Button("Add To Cart");
+			button.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					if ((int) spinner.getValue() > 0 && (int) spinner.getValue() <= book.in_stock) {
+						MainCart.addNewItemByProduct(book, (int) spinner.getValue());
+						Router.ShowCartDetails();
+					}
 
-		Button button = new Button("Add To Cart");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if ((int) spinner.getValue() > 0 && (int)spinner.getValue()<=book.in_stock) {
-					MainCart.addNewItemByProduct(book, (int) spinner.getValue());
-					MainPage.ShowCartDetails();
 				}
+			});
+			button.setFont(new Font("Dialog", Font.BOLD, 21));
+			button.setBounds(1251, 493, 143, 80);
+			add(button);
+		}else {
+			JLabel lblOutOfStock = new JLabel("Out Of Stock");
+			lblOutOfStock.setForeground(Color.RED);
+			lblOutOfStock.setFont(new Font("Tahoma", Font.PLAIN, 24));
+			lblOutOfStock.setBounds(987, 508, 181, 54);
+			add(lblOutOfStock);
+		}
 
-			}
-		});
-		button.setFont(new Font("Dialog", Font.BOLD, 21));
-		button.setBounds(1251, 493, 143, 80);
-		add(button);
 	}
-	
+
 	private void GenerateSingleBook(Book book) {
-		Component img = Helper.GenerateImage(
-				book.photo, 250, 400);
+		Component img = Helper.GenerateImage(book.photo, 250, 400);
 		img.setBounds(50, 50, 250, 400);
 		add(img);
 
@@ -95,7 +102,7 @@ public class SingleBookDetails extends JPanel {
 		add(writerDetials);
 
 		JTextPane inStockDetails = new JTextPane();
-		inStockDetails.setText( Integer.toString(book.in_stock) );
+		inStockDetails.setText(Integer.toString(book.in_stock));
 		inStockDetails.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		inStockDetails.setEditable(false);
 		inStockDetails.setBounds(437, 193, 959, 54);
@@ -114,5 +121,7 @@ public class SingleBookDetails extends JPanel {
 		descriptionDetials.setEditable(false);
 		descriptionDetials.setBounds(437, 333, 959, 133);
 		add(descriptionDetials);
+		
+	
 	}
 }

@@ -10,7 +10,6 @@ public class _Users extends Model {
 	
 	public _Users()  {
 		Field[] fields = Users.class.getFields();
-
 		init(fields);
 	}
 

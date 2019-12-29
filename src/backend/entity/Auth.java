@@ -4,7 +4,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import backend.controller.MainPage;
+import backend.controller.Helper;
+import backend.controller.Router;
 import backend.model._Users;
 
 public class Auth {
@@ -35,18 +36,18 @@ public class Auth {
 		return users;
 	}
 
-	public static void saveInformation(String name, String surname, String email, String password, String card_num,
+	public static void UpdateInformation(String name, String surname, String email, String password, String card_num,
 			String cvv) {
 		_Users _user = new _Users();
 		Map<String, String> user = new HashMap<>();
 		user.put("name", name);
 		user.put("surname", surname);
 		user.put("email", email);
-		user.put("password", password);
+		user.put("password", Helper.encryption(password));
 		if (card_num.length() == 16)
-			user.put("card_number", card_num);
+			user.put("card_number", Helper.encryption(card_num));
 		if (cvv.length() == 3)
-			user.put("cvv_code", cvv);
+			user.put("cvv_code", Helper.encryption(cvv));
 		_user.update(user, users.id);
 		refresh();
 	}
@@ -70,7 +71,8 @@ public class Auth {
 	public boolean check() {
 		try {
 			_Users _user = new _Users();
-			Users[] users = (Users[]) _user.where("email", "=", email).and().where("password", "=", password).first();
+			Users[] users = (Users[]) _user.where("email", "=", email).and()
+					.where("password", "=", Helper.encryption(password)).first();
 			boolean status = users.length > 0;
 			if (status) {
 				new Auth(users[0]);
@@ -90,6 +92,22 @@ public class Auth {
 		password = null;
 		MainCart.RefreshUserIdAfterSuccessfullyLogout();
 
-		MainPage.ShowMainPageController();
+		Router.ShowCategoriesList();
+	}
+
+	public static void CreateUser(String name, String surname, String email, String password, String card_num,
+			String cvv) {
+		_Users _user = new _Users();
+		Map<String, String> user = new HashMap<>();
+		user.put("name", name);
+		user.put("surname", surname);
+		user.put("email", email);
+		user.put("password", Helper.encryption(password));
+		if (card_num.length() == 16)
+			user.put("card_number", Helper.encryption(card_num));
+		if (cvv.length() == 3)
+			user.put("cvv_code", Helper.encryption(cvv));
+		_user.create(user);
+		new Auth(email, password).check();
 	}
 }

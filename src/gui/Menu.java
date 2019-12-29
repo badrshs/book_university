@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import backend.controller.AdminController;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Auth;
 import backend.entity.MainCart;
 
@@ -55,7 +55,7 @@ public class Menu extends JMenuBar {
 		categoryList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainPage.ShowMainPageController();
+				Router.ShowCategoriesList();
 			}
 		});
 		add(categoryList);
@@ -74,13 +74,11 @@ public class Menu extends JMenuBar {
 
 	private void generateCart() {
 		String number = "( "+MainCart.cartItems.size()+" )";
-		
-		cart = new JMenuButton("My Cart "+number);
+		cart = new JMenuButton("Basket Cart "+number);
 		cart.setBounds(1000, 0, 100, 40);
 		cart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MainPage.ShowCartDetails();
-
+				Router.ShowCartDetails();
 			}
 		});
 		add(cart);
@@ -90,7 +88,7 @@ public class Menu extends JMenuBar {
 			login = new JMenuButton("Login");
 			login.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MainPage.ShowLoginPage();
+					Router.ShowLoginPage();
 				}
 			});
 			add(login);
@@ -117,7 +115,7 @@ public class Menu extends JMenuBar {
 			userInfo.setFont(new Font("Arial", Font.PLAIN, 18));
 			userInfo.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MainPage.ShowUserInformationPage();
+					Router.ShowUserInformationPage();
 				}
 			});
 			logout = new JMenuItem("Logout");

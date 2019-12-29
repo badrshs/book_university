@@ -17,11 +17,11 @@ import backend.entity.Users;
 import javax.swing.JButton;
 import javax.swing.JPasswordField;
 
-public class UserInformation extends JPanel {
+public class Register extends JPanel {
 	private JTextField name;
 	private JTextField surname;
 	private JTextField email;
-	private JTextField password;
+	private JPasswordField password;
 	private JTextField card_numb;
 	private JTextField cvv;
 	private JPasswordField confirmPassword;
@@ -29,13 +29,12 @@ public class UserInformation extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public UserInformation() {
-		Users user = Auth.users;
+	public Register() {
 		setBounds(12, 100, 700, 584);
 		setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(47, 37, 607, 468);
+		panel.setBounds(47, 37, 607, 447);
 		add(panel);
 		panel.setLayout(null);
 
@@ -51,22 +50,22 @@ public class UserInformation extends JPanel {
 
 		JLabel email_lbl = new JLabel("Email");
 		email_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		email_lbl.setBounds(0, 150, 138, 42);
+		email_lbl.setBounds(0, 150, 138, 55);
 		panel.add(email_lbl);
 
 		JLabel password_lbl = new JLabel("Password");
 		password_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		password_lbl.setBounds(0, 219, 138, 55);
+		password_lbl.setBounds(0, 205, 138, 55);
 		panel.add(password_lbl);
 
 		JLabel card_number_lbl = new JLabel("Card Number");
 		card_number_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		card_number_lbl.setBounds(0, 332, 138, 55);
+		card_number_lbl.setBounds(0, 324, 138, 55);
 		panel.add(card_number_lbl);
 
 		JLabel cvv_code_lbl = new JLabel("CVV");
 		cvv_code_lbl.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		cvv_code_lbl.setBounds(0, 400, 138, 55);
+		cvv_code_lbl.setBounds(0, 381, 138, 55);
 		panel.add(cvv_code_lbl);
 
 		name = new JTextField();
@@ -84,41 +83,37 @@ public class UserInformation extends JPanel {
 		email.setBounds(184, 150, 381, 42);
 		panel.add(email);
 
-		password = new JTextField();
+		password = new JPasswordField();
 		password.setColumns(10);
-		password.setBounds(184, 228, 381, 42);
+		password.setBounds(184, 218, 381, 42);
 		panel.add(password);
 
 		card_numb = new JTextField();
 		card_numb.setColumns(10);
-		card_numb.setBounds(184, 345, 381, 42);
+		card_numb.setBounds(184, 337, 381, 42);
 		panel.add(card_numb);
 
 		cvv = new JTextField();
 		cvv.setColumns(10);
-		cvv.setBounds(184, 411, 381, 42);
+		cvv.setBounds(184, 392, 381, 42);
 		panel.add(cvv);
 
 		JButton btnSave = new JButton("SAVE");
 		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 28));
-		btnSave.setBounds(271, 509, 147, 75);
+		btnSave.setBounds(274, 496, 147, 75);
 
 		add(btnSave);
 
-		name.setText(user.name);
-		surname.setText(user.surname);
-		email.setText(user.email);
-		
+		JLabel lblConfirmpassword = new JLabel("Confirm-Password");
+		lblConfirmpassword.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblConfirmpassword.setBounds(0, 260, 160, 55);
+		panel.add(lblConfirmpassword);
+
 		confirmPassword = new JPasswordField();
 		confirmPassword.setText((String) null);
 		confirmPassword.setColumns(10);
-		confirmPassword.setBounds(184, 287, 381, 42);
+		confirmPassword.setBounds(184, 273, 381, 42);
 		panel.add(confirmPassword);
-		
-		JLabel lblConfirnpassword = new JLabel("Confirm Password");
-		lblConfirnpassword.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblConfirnpassword.setBounds(0, 284, 172, 42);
-		panel.add(lblConfirnpassword);
 
 		btnSave.addActionListener(new ActionListener() {
 
@@ -126,11 +121,10 @@ public class UserInformation extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 
 				if (validateInputs()) {
-					Auth.UpdateInformation(name.getText(), surname.getText(), email.getText(), password.getText(),
+					Auth.CreateUser(name.getText(), surname.getText(), email.getText(), password.getText(),
 							card_numb.getText(), cvv.getText());
-					Helper.showSuccess("UPDATED SUCCESSFULLY");
-					Router.mainPageGui.generateMenue(new Menu());
-
+					Helper.showSuccess("Your Account Created SUCCESSFULLY");
+					Router.ShowCategoriesList();
 				}
 
 			}
@@ -151,7 +145,7 @@ public class UserInformation extends JPanel {
 			Helper.showError("  email is not valid");
 			return false;
 
-		} else if (!Validation.IsEmailTaken(email.getText(), Auth.users.id)) {
+		} else if (!Validation.IsEmailTaken(email.getText())) {
 			Helper.showError("email is taken");
 			return false;
 
@@ -159,7 +153,7 @@ public class UserInformation extends JPanel {
 			Helper.showError("password must be at least 8 characters");
 			return false;
 
-		}else if (!password.getText().equals(confirmPassword.getText())) {
+		}else if (!password.getText().equals(confirmPassword.getText())) {	
 			Helper.showError("Password and confirm password does not match");
 			return false;
 
@@ -177,5 +171,4 @@ public class UserInformation extends JPanel {
 		return true;
 
 	}
-
 }

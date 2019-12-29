@@ -55,7 +55,7 @@ public class Model implements IModel {
 	}
 
 	private String generateQuery() {
-		return "select " + selectedColumns + " from " + table + " " + where + " ";
+		return "select " + selectedColumns + " from " + table + " " + where + " "+tail;
 	}
 
 	public Model where(String columns, String condition, String value) {
@@ -63,7 +63,7 @@ public class Model implements IModel {
 			where += " where ";
 		values.add(value);
 		where += " " + columns + " " + condition + "( ? )";
-		generateQuery();
+	String query =	generateQuery();
 		return this;
 	}
 
@@ -86,10 +86,17 @@ public class Model implements IModel {
 	public Model where(String columns, String condition, int value) {
 		return where(columns, condition, Integer.toString(value));
 	}
-
+	
 	public Model and() {
 		where += " and ";
 		generateQuery();
+		return this;
+	}
+
+	public Model orderBy(String orderBy) {
+		tail += " ORDER BY id "+orderBy+" ";
+		
+		String c = generateQuery();
 		return this;
 	}
 

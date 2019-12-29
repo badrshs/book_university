@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 
 import backend.controller.AdminController;
 import backend.controller.Helper;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Auth;
 import backend.entity.Category;
 
@@ -24,7 +24,7 @@ public class CategoryButton extends JPanel {
 		categoryBotton.setFont(new Font("Bahnschrift", Font.BOLD, 20));
 		categoryBotton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				MainPage.ShowBooksPage(category);
+				Router.ShowBooksPage(category);
 			}
 		});
 		add(categoryBotton);

@@ -8,6 +8,7 @@ import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -17,6 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.security.*;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 
 public class Helper {
 	public static Component GenerateImage(String imageUrl, int width, int height) {
@@ -72,4 +76,23 @@ public class Helper {
 
 		JOptionPane.showMessageDialog(new JFrame(), message, "Dialog", JOptionPane.INFORMATION_MESSAGE);
 	}
+
+	public static String encryption(String text) {
+		String appendPassword = "Hi " + text + " CIU";
+		try {
+			byte[] base64 = Base64.getEncoder().encode(appendPassword.getBytes());
+
+			// https://stackoverflow.com/questions/415953/how-can-i-generate-an-md5-hash
+			java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
+			byte[] array = md.digest(base64);
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < array.length; ++i) {
+				sb.append(Integer.toHexString((array[i] & 0xFF) | 0x100).substring(1, 3));
+			}
+			return sb.toString();
+		} catch (java.security.NoSuchAlgorithmException e) {
+		}
+		return null;
+	}
+
 }

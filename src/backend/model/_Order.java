@@ -1,15 +1,18 @@
 package backend.model;
 
+import java.lang.reflect.Field;
+
+import backend.entity.Book;
+import backend.entity.Order;
+
 public class _Order  extends Model{
 
-	public _Order() {
-		super();
-		// TODO Auto-generated constructor stub
-		
- 
+	
+	public _Order()  {
+		table = "main_order";
+		Field[] fields = Order.class.getFields();
+		init(fields);
 	}
-	
-	
 
 
 }

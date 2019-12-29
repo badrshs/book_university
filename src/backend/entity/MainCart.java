@@ -1,5 +1,6 @@
 package backend.entity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -58,10 +59,10 @@ public class MainCart {
 		for (CartItems item : cartItems) {
 			item.user_id = Auth.users.id;
 		}
-		getUserCartList(); // after login
+		ReSyncCartItem(); // after login
 	}
 
-	private static void getUserCartList() {
+	public static void ReSyncCartItem() {
 		if (!Auth.isAuth) {
 			return;
 		}
@@ -86,6 +87,8 @@ public class MainCart {
 			Book book = search(books, item.book_id); // search on specific book
 			if (book.in_stock < item.quantity)
 				item.quantity = book.in_stock;
+			if (book.in_stock == 0)
+				continue;
 			UpdateCartItemFromDatabase(book, item); // add new book item to the local cart
 		}
 		updateUserDatabaseCart();
@@ -144,7 +147,7 @@ public class MainCart {
 		return books;
 	}
 
-	private static void deleteUserDatabaseCart() {
+	public static void deleteUserDatabaseCart() {
 		if (!Auth.isAuth)
 			return;
 		_CartItems _cart = new _CartItems();
@@ -178,5 +181,26 @@ public class MainCart {
 		Map<String, String> data = new HashMap<>();
 		data.put("quantity", Integer.toString(quantity));
 		_cart.update(data, id);
+		
+		for (CartItems item : cartItems) {
+		if(item.id==id)
+			item.quantity = quantity;
+		}
+		
+	}
+
+	public static String calculateTotalPrice() {
+		double total = 0;
+		for (CartItems item : cartItems) {
+			total = total + (item.quantity * item.get_Book().price);
+		}
+		DecimalFormat df2 = new DecimalFormat("#.###");
+
+		return df2.format(total);
+	}
+
+	public static void PurchaseOrder() {
+		// TODO Auto-generated method stub
+		
 	}
 }

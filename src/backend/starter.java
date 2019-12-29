@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Category;
 import backend.entity.Users;
 import backend.model._Category;
@@ -33,7 +33,7 @@ public class starter {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainPage.ShowMainPageController();	
+					Router.ShowCategoriesList();	
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

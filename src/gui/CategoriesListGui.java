@@ -11,7 +11,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.Category;

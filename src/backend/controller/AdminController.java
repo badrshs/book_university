@@ -34,7 +34,7 @@ public class AdminController {
 		Map<String, String> data = new HashMap<>();
 		data.put("name", text);
 		_category.update(data, id);
-		MainPage.ShowMainPageController();
+		Router.ShowCategoriesList();
 		return true;
 	}
 
@@ -42,7 +42,7 @@ public class AdminController {
 
 		_Category _category = new _Category();
 		_category.delete(id);
-		MainPage.ShowMainPageController();
+		Router.ShowCategoriesList();
 		return true;
 	}
 
@@ -51,14 +51,14 @@ public class AdminController {
 		Map<String, String> data = new HashMap<>();
 		data.put("name", text);
 		_category.create(data);
-		MainPage.ShowMainPageController();
+		Router.ShowCategoriesList();
 		return true;
 	}
 
 	public static void UpdateBook(Map<String, String> data, Book book) {
 		_Book _book = new _Book();
 		_book.update(data, book.id);
-		MainPage.ShowBooksPage(getCategory(book.category_id));
+		Router.ShowBooksPage(getCategory(book.category_id));
 	}
 
 	private static Category getCategory(int id) {

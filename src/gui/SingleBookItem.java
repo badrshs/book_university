@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import backend.controller.AdminController;
 import backend.controller.Helper;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.*;
 import java.awt.Font;
 import java.awt.Graphics2D;
@@ -77,7 +77,7 @@ public class SingleBookItem extends JPanel {
 			Button button = new Button("Details");
 			button.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					MainPage.ShowSingleBook(book);
+					Router.ShowSingleBook(book);
 				}
 			});
 			button.setFont(new Font("Dialog", Font.BOLD, 15));

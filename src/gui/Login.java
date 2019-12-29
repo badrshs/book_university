@@ -8,7 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import backend.controller.Helper;
-import backend.controller.MainPage;
+import backend.controller.Router;
 import backend.entity.Auth;
 
 import java.awt.Font;
@@ -27,11 +27,11 @@ public class Login extends JPanel {
 	 * Create the panel.
 	 */
 	public Login() {
-		setBounds(12, 100, 1600, 800);
+		setBounds(0, 0, 544, 309);
 		setLayout(null);
 
 		Panel panel = new Panel();
-		panel.setBounds(465, 70, 544, 309);
+		panel.setBounds(0, 0, 544, 309);
 		add(panel);
 		panel.setLayout(null);
 
@@ -67,14 +67,24 @@ public class Login extends JPanel {
 				if (!process.check()) {
 					Helper.showError("Wrong Username Or Password");
 				} else {
-					MainPage.ShowMainPageController();
+					Router.ShowCategoriesList();
 				}
 			}
 		});
-		login.setBounds(197, 232, 173, 64);
+		login.setBounds(296, 232, 173, 64);
 		panel.add(login);
 		login.setFont(new Font("Tahoma", Font.PLAIN, 25));
 
 		add(panel);
+		
+		JButton btnRegister = new JButton("Register");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Router.ShowRegister();
+			}
+		});
+		btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		btnRegister.setBounds(97, 232, 173, 64);
+		panel.add(btnRegister);
 	}
 }
