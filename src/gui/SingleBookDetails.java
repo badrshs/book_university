@@ -1,27 +1,23 @@
 package gui;
 
+import java.awt.Button;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.JTextPane;
+import javax.swing.SpinnerNumberModel;
 
 import backend.controller.Helper;
 import backend.controller.Router;
-import backend.entity.Auth;
 import backend.entity.Book;
 import backend.entity.MainCart;
-
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.Label;
-import java.io.IOException;
-import java.awt.Font;
-import javax.swing.JTextPane;
-import java.awt.Button;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class SingleBookDetails extends JPanel {
 
@@ -47,7 +43,7 @@ public class SingleBookDetails extends JPanel {
 			button.setFont(new Font("Dialog", Font.BOLD, 21));
 			button.setBounds(1251, 493, 143, 80);
 			add(button);
-		}else {
+		} else {
 			JLabel lblOutOfStock = new JLabel("Out Of Stock");
 			lblOutOfStock.setForeground(Color.RED);
 			lblOutOfStock.setFont(new Font("Tahoma", Font.PLAIN, 24));
@@ -121,7 +117,6 @@ public class SingleBookDetails extends JPanel {
 		descriptionDetials.setEditable(false);
 		descriptionDetials.setBounds(437, 333, 959, 133);
 		add(descriptionDetials);
-		
-	
+
 	}
 }

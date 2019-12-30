@@ -3,10 +3,24 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JSpinner;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
 
 import backend.controller.AdminController;
@@ -15,26 +29,6 @@ import backend.controller.Validation;
 import backend.entity.Book;
 import backend.entity.Category;
 import backend.model._Category;
-
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SpinnerNumberModel;
-
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.swing.SwingConstants;
-import javax.swing.JSplitPane;
-import javax.swing.JTextArea;
-import javax.swing.DropMode;
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class ManageBook extends JDialog implements ActionListener {
 

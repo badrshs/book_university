@@ -1,15 +1,9 @@
 package gui;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.JMenuItem;
 import javax.swing.JMenu;
-import java.awt.EventQueue;
-
-import backend.controller.Router;
-import backend.entity.MainCart;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 public class  MainPageGui extends JFrame {
 

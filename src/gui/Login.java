@@ -1,23 +1,20 @@
 package gui;
 
-import java.awt.Component;
+import java.awt.Font;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import backend.controller.Helper;
 import backend.controller.Router;
 import backend.entity.Auth;
-
-import java.awt.Font;
-import javax.swing.JTextField;
-import java.awt.Button;
-import javax.swing.JButton;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Login extends JPanel {
 	private JTextField username;
@@ -47,13 +44,13 @@ public class Login extends JPanel {
 		Password.setHorizontalAlignment(SwingConstants.LEFT);
 		Password.setFont(new Font("Tahoma", Font.PLAIN, 18));
 
-		username = new JTextField("shs1bader@gmail.com");
+		username = new JTextField();
 		username.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		username.setBounds(150, 60, 319, 50);
 		panel.add(username);
 		username.setColumns(10);
 
-		password = new JPasswordField("shs1bader@gmail.com");
+		password = new JPasswordField();
 		password.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		password.setBounds(149, 151, 319, 50);
 		panel.add(password);

@@ -1,8 +1,5 @@
 package backend.entity;
 
-import java.util.Arrays;
-import backend.model.*;
-
 public class OrderItems {
 
 	public int id;

@@ -1,7 +1,7 @@
 package backend.model;
 import java.lang.reflect.Field;
 
-import backend.entity.*;
+import backend.entity.Category;
 
 public class _Category extends Model {
 

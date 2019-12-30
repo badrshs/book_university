@@ -1,7 +1,6 @@
 package backend.entity;
 
-import java.util.Arrays;
-import backend.model.*;
+import backend.model._Book;
 
 public class Category {
 

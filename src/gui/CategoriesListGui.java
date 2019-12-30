@@ -1,23 +1,11 @@
 package gui;
 
-import java.awt.Button;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
-import backend.controller.Router;
 import backend.entity.Auth;
-import backend.entity.Book;
 import backend.entity.Category;
-import javax.swing.JScrollBar;
-import java.awt.Canvas;
-import javax.swing.JSpinner;
 
 public class CategoriesListGui extends JPanel {
 

@@ -1,14 +1,5 @@
 package backend.model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.simple.JSONObject;
-import org.omg.CORBA.Any;
-
 public interface IModel<Base> {
 	
 	public   String Queury = "";

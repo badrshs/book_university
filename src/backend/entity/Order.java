@@ -1,12 +1,13 @@
 package backend.entity;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
 import backend.controller.Helper;
-import backend.model.*;
+import backend.model._Book;
+import backend.model._Order;
+import backend.model._OrderItems;
+import backend.model._Users;
 
 public class Order {
 
@@ -85,11 +86,11 @@ public class Order {
 		return books[0].in_stock >= item.quantity;
 	}
 
-	public boolean verify(String cardNumber,String cvv) {
+	public boolean verify(String cardNumber, String cvv) {
 		_Users _user = new _Users();
 		Users[] users = (Users[]) _user.where("card_number", "=", Helper.encryption(cardNumber)).and()
-				.where("cvv_code", "=", Helper.encryption(cvv)).and().where("id","=", Auth.id()).first();
-		
- 		return users.length>0;
+				.where("cvv_code", "=", Helper.encryption(cvv)).and().where("id", "=", Auth.id()).first();
+
+		return users.length > 0;
 	}
 }

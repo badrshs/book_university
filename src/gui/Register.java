@@ -1,21 +1,19 @@
 package gui;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import backend.controller.Helper;
 import backend.controller.Router;
 import backend.controller.Validation;
 import backend.entity.Auth;
-import backend.entity.Users;
-
-import javax.swing.JButton;
-import javax.swing.JPasswordField;
 
 public class Register extends JPanel {
 	private JTextField name;
@@ -153,7 +151,7 @@ public class Register extends JPanel {
 			Helper.showError("password must be at least 8 characters");
 			return false;
 
-		}else if (!password.getText().equals(confirmPassword.getText())) {	
+		} else if (!password.getText().equals(confirmPassword.getText())) {
 			Helper.showError("Password and confirm password does not match");
 			return false;
 

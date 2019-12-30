@@ -7,13 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.text.html.parser.Entity;
+import org.json.simple.JSONObject;
 
-import org.json.simple.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
-
-import backend.entity.Users;
 
 public class Model implements IModel {
 
@@ -55,7 +52,7 @@ public class Model implements IModel {
 	}
 
 	private String generateQuery() {
-		return "select " + selectedColumns + " from " + table + " " + where + " "+tail;
+		return "select " + selectedColumns + " from " + table + " " + where + " " + tail;
 	}
 
 	public Model where(String columns, String condition, String value) {
@@ -63,7 +60,7 @@ public class Model implements IModel {
 			where += " where ";
 		values.add(value);
 		where += " " + columns + " " + condition + "( ? )";
-	String query =	generateQuery();
+		String query = generateQuery();
 		return this;
 	}
 
@@ -86,7 +83,7 @@ public class Model implements IModel {
 	public Model where(String columns, String condition, int value) {
 		return where(columns, condition, Integer.toString(value));
 	}
-	
+
 	public Model and() {
 		where += " and ";
 		generateQuery();
@@ -94,8 +91,8 @@ public class Model implements IModel {
 	}
 
 	public Model orderBy(String orderBy) {
-		tail += " ORDER BY id "+orderBy+" ";
-		
+		tail += " ORDER BY id " + orderBy + " ";
+
 		String c = generateQuery();
 		return this;
 	}

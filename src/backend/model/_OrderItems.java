@@ -2,7 +2,6 @@ package backend.model;
 
 import java.lang.reflect.Field;
 
-import backend.entity.Category;
 import backend.entity.OrderItems;
 
 public class _OrderItems extends Model {

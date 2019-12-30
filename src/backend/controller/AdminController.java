@@ -1,9 +1,7 @@
 package backend.controller;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
 import backend.entity.Book;
 import backend.entity.Category;
 import backend.model._Book;

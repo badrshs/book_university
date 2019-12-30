@@ -1,7 +1,7 @@
 package backend.entity;
 
 public class Users extends Base {
-	
+
 	public int id;
 	public String name;
 	public String surname;

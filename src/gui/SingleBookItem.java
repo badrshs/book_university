@@ -1,6 +1,10 @@
 package gui;
 
 import java.awt.Button;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+import java.awt.Panel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -8,26 +12,16 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
 import backend.controller.AdminController;
 import backend.controller.Helper;
 import backend.controller.Router;
-import backend.entity.*;
-import java.awt.Font;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.RenderingHints;
-import java.awt.Color;
-import java.awt.ComponentOrientation;
-import java.awt.Component;
-import java.awt.Rectangle;
-import javax.swing.JTextPane;
-import java.awt.Panel;
-import javax.swing.JButton;
+import backend.entity.Book;
 
 public class SingleBookItem extends JPanel {
 

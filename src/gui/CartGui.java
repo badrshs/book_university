@@ -1,21 +1,16 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextPane;
 
 import backend.entity.Auth;
 import backend.entity.CartItems;
 import backend.entity.MainCart;
-import java.awt.FlowLayout;
-import java.awt.SystemColor;
-
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextPane;
 
 public class CartGui extends JPanel {
 
