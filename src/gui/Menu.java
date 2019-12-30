@@ -28,8 +28,8 @@ public class Menu extends JMenuBar {
 	}
 
 	JMenu menu;
-	public  boolean addCategoryStatus = false;
-	public static JMenuButton login, mainPage, exit, cart, categoryList, addCategory;
+	public boolean addCategoryStatus = false;
+	public static JMenuButton login, mainPage, exit, cart, categoryList, addCategory, addBook;
 	JMenuItem logout, userInfo;
 
 	public Menu() {
@@ -38,15 +38,15 @@ public class Menu extends JMenuBar {
 
 	public Menu(int fresh) {
 	}
+
 	public void generateMenue() {
 		setPreferredSize(new Dimension(100, 40));
 		generateUserInfo();
 		generateLogin();
 		generateCategoriesList();
 		generateCart();
-		if(addCategoryStatus) {
-			generateAddCategory();
-		}
+		generateAddCategory();
+		generateAddBook();
 		generateExit();
 	}
 
@@ -73,8 +73,8 @@ public class Menu extends JMenuBar {
 	}
 
 	private void generateCart() {
-		String number = "( "+MainCart.cartItems.size()+" )";
-		cart = new JMenuButton("Basket Cart "+number);
+		String number = "( " + MainCart.cartItems.size() + " )";
+		cart = new JMenuButton("Basket Cart " + number);
 		cart.setBounds(1000, 0, 100, 40);
 		cart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -83,6 +83,7 @@ public class Menu extends JMenuBar {
 		});
 		add(cart);
 	}
+
 	private void generateLogin() {
 		if (!Auth.isAuth) {
 			login = new JMenuButton("Login");
@@ -104,6 +105,18 @@ public class Menu extends JMenuBar {
 				}
 			});
 			add(addCategory);
+		}
+	}
+
+	public void generateAddBook() {
+		if (Auth.isAdmin()) {
+			addBook = new JMenuButton("Add New Book");
+			addBook.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					AdminController.AddBook();
+				}
+			});
+			add(addBook);
 		}
 	}
 

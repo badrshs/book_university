@@ -19,7 +19,7 @@ public class  MainPageGui extends JFrame {
 	public MainPageGui() {
 		setLayout(null);
 		setVisible(true);
-		setTitle("Admin Page");
+		setTitle("Book Store");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1600, 800);

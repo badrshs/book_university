@@ -41,9 +41,9 @@ public class AdminController {
 	public static boolean DeleteCategory(int id) {
 
 		_Category _category = new _Category();
-		_category.delete(id);
+		boolean status = _category.delete(id);
 		Router.ShowCategoriesList();
-		return true;
+		return status;
 	}
 
 	public static boolean CreateCategory(String text) {
@@ -55,15 +55,33 @@ public class AdminController {
 		return true;
 	}
 
-	public static void UpdateBook(Map<String, String> data, Book book) {
+	public static boolean UpdateBook(Map<String, String> data, Book book) {
 		_Book _book = new _Book();
-		_book.update(data, book.id);
+		boolean status = _book.update(data, book.id);
+		if (!status)
+			return status;
 		Router.ShowBooksPage(getCategory(book.category_id));
+		return status;
+
 	}
 
 	private static Category getCategory(int id) {
 		_Category _category = new _Category();
 		Category[] categories = (Category[]) _category.find(id);
 		return categories[0];
+	}
+
+	public static void AddBook() {
+		ManageBook x = new ManageBook();
+
+	}
+
+	public static boolean SaveBook(Map<String, String> data) {
+		_Book _book = new _Book();
+		boolean status = _book.create(data);
+		if (!status)
+			return status;
+		Router.ShowBooksPage(getCategory(Integer.parseInt(data.get("category_id"))));
+		return status;
 	}
 }

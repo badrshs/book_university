@@ -185,16 +185,14 @@ public class Model implements IModel {
 		return "INSERT INTO `" + table + "`(" + keys + ") VALUES (" + values + ")";
 	}
 
-	public Object create(Map<String, String> names) {
+	public boolean create(Map<String, String> names) {
 		String query = CreateInsertSqlStatment(names);
-		boolean result = db.createUpdaterStatement(query, values);
-		return result;
+		return db.createUpdaterStatement(query, values);
 	}
 
-	public Object update(Map<String, String> data, int id) {
+	public boolean update(Map<String, String> data, int id) {
 		String query = CreateUpdateSqlStatment(data, id);
-		boolean result = db.createUpdaterStatement(query, values);
-		return result;
+		return db.createUpdaterStatement(query, values);
 	}
 
 	private String deleteLastCharacter(String string) {

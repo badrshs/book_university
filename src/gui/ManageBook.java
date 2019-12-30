@@ -19,9 +19,12 @@ import backend.model._Category;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,10 +47,21 @@ public class ManageBook extends JDialog implements ActionListener {
 	private JTextArea description;
 	private JLabel imageContainer;
 	private String selectedImage;
+	private UploadButton btnUploadNewImage;
+	private boolean isNew = true;
 
 	public ManageBook(Book book) {
 		categories = getAllCategory();
 		generate(book);
+		isNew = false;
+	}
+
+	public ManageBook() {
+		categories = getAllCategory();
+		Book book = new Book();
+		book.photo = "no-image.jpg";
+		generate(book);
+		isNew = true;
 	}
 
 	private Category[] getAllCategory() {
@@ -82,7 +96,7 @@ public class ManageBook extends JDialog implements ActionListener {
 		separator.setBounds(22, 68, 418, 11);
 		contentPanel.add(separator);
 
-		name = new JTextField(book.name);
+		name = new JTextField((book.name == null) ? "" : book.name);
 		name.setBounds(128, 15, 260, 40);
 		contentPanel.add(name);
 		name.setColumns(10);
@@ -91,7 +105,7 @@ public class ManageBook extends JDialog implements ActionListener {
 		separator_1.setBounds(22, 132, 418, 11);
 		contentPanel.add(separator_1);
 
-		writer = new JTextField(book.writer);
+		writer = new JTextField((book.writer == null) ? "" : book.writer);
 		writer.setColumns(10);
 		writer.setBounds(128, 79, 260, 40);
 		contentPanel.add(writer);
@@ -110,9 +124,9 @@ public class ManageBook extends JDialog implements ActionListener {
 		lblDescriptionlbl.setBounds(22, 144, 95, 35);
 		contentPanel.add(lblDescriptionlbl);
 
-		price = new JSpinner();
+		price = new JSpinner(new SpinnerNumberModel(1, 0, 1000000, 1));
 		price.setBounds(301, 370, 104, 40);
-		price.setValue(book.price);
+		price.setValue((book.price == 0) ? 0 : book.price);
 
 		contentPanel.add(price);
 
@@ -121,21 +135,20 @@ public class ManageBook extends JDialog implements ActionListener {
 		lblPrice.setBounds(209, 371, 51, 35);
 		contentPanel.add(lblPrice);
 
-		JButton btnUploadNewImage = new JButton("upload new image");
+		btnUploadNewImage = new UploadButton("upload new image");
 		btnUploadNewImage.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				selectedImage = Helper.selectImage();
-
-				imageProcessing(selectedImage);
-
+			public void actionPerformed(ActionEvent e) {
+				btnUploadNewImage.processUpload();
+				imageProcessing(btnUploadNewImage.toString());
 			}
 		});
+
 		btnUploadNewImage.setBounds(12, 581, 173, 25);
 		contentPanel.add(btnUploadNewImage);
 
-		description = new JTextArea(book.description);
+		description = new JTextArea((book.description == null) ? "" : book.description);
 		description.setLineWrap(true);
 		description.setBounds(128, 150, 260, 117);
 		contentPanel.add(description);
@@ -159,10 +172,10 @@ public class ManageBook extends JDialog implements ActionListener {
 		lblInstock.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblInstock.setBounds(209, 513, 70, 35);
 		contentPanel.add(lblInstock);
-		imageProcessing(book.photo);
-		JSpinner InStock = new JSpinner();
+		imageProcessing((book.photo == null) ? "no-image.jpg" : book.photo);
+		JSpinner InStock = new JSpinner(new SpinnerNumberModel(1, 0, 100000, 1));
 		InStock.setBounds(301, 512, 104, 40);
-		InStock.setValue(book.in_stock);
+		InStock.setValue((book.in_stock == 0) ? 0 : book.in_stock);
 		contentPanel.add(InStock);
 		{
 			JPanel buttonPane = new JPanel();
@@ -177,13 +190,27 @@ public class ManageBook extends JDialog implements ActionListener {
 						data.put("writer", writer.getText());
 						data.put("description", description.getText());
 						data.put("price", price.getValue().toString());
-						data.put("in_stock", InStock.getValue().toString());
+						data.put("in_stock", InStock.getValue().toString());// "no-image.jpg"
+						if (category.getSelectedIndex() == -1) {
+							Helper.showError("please select product category");
+							return;
+						}
 						data.put("category_id", Integer.toString(categories[category.getSelectedIndex()].id));
-						data.put("photo", "xx");
-
+						data.put("photo",
+								(btnUploadNewImage.toString() == null) ? book.photo : btnUploadNewImage.toString());
 						if (valdation(data)) {
-							AdminController.UpdateBook(data, book);
-							Helper.showSuccess("Book updated successfully");
+							if (isNew) {
+								if (AdminController.SaveBook(data))
+									Helper.showSuccess("Book added successfully");
+								else
+									Helper.showError("Error On Create");
+
+							} else {
+								if (AdminController.UpdateBook(data, book))
+									Helper.showSuccess("Book updated successfully");
+								else
+									Helper.showError("Error On Udate");
+							}
 							dispose();
 						}
 					}
@@ -203,10 +230,13 @@ public class ManageBook extends JDialog implements ActionListener {
 		}
 	}
 
-	private void imageProcessing(String PATH) {
+	private void imageProcessing(String name) {
+		File parentPath = new File("").getAbsoluteFile();
+		if (imageContainer != null)
+			imageContainer.removeAll();
 		imageContainer = new JLabel();
 		imageContainer.setBounds(12, 358, 175, 210);
-		Component img = Helper.GenerateImage("C:\\Users\\bader\\Desktop\\20150414_211356.jpg", 200, 210);
+		Component img = Helper.GenerateImage(name, 200, 210);
 		img.setBounds(0, 0, 175, 210);
 		imageContainer.add(img);
 		contentPanel.add(imageContainer);
@@ -216,9 +246,8 @@ public class ManageBook extends JDialog implements ActionListener {
 
 	public boolean valdation(Map<String, String> data) {
 
-		if (Validation.IsA_Z(data.get("name"))) {
+		if (!Validation.IsA_Z(data.get("name"))) {
 			Helper.showError("can't validate name text");
-
 			return false;
 		} else if (!Validation.IsA_Z(data.get("writer"))) {
 			Helper.showError("can't validate writer text");

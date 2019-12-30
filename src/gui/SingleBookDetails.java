@@ -109,7 +109,7 @@ public class SingleBookDetails extends JPanel {
 		add(inStockDetails);
 
 		JTextPane priceDetails = new JTextPane();
-		priceDetails.setText(book.price + "TL");
+		priceDetails.setText(book.price + "$");
 		priceDetails.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		priceDetails.setEditable(false);
 		priceDetails.setBounds(437, 266, 959, 54);

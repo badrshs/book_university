@@ -49,26 +49,25 @@ public class MySQLAccess {
 
 		}
 	}
-	public boolean isStringInt(String s)
-	{
-	    try
-	    {
-	        Integer.parseInt(s);
-	        return true;
-	    } catch (NumberFormatException ex)
-	    {
-	        return false;
-	    }
+
+	public boolean isStringInt(String s) {
+		try {
+			Integer.parseInt(s);
+			return true;
+		} catch (NumberFormatException ex) {
+			return false;
+		}
 	}
+
 	public ResultSet createReaderStatement(String query, List<String> list) {
 		try {
 			PreparedStatement statement = connect.prepareStatement(query);
 			for (int i = 0; i < list.size(); i++) {
 				String val = list.get(i);
-				if(isStringInt(val)) {
+				if (isStringInt(val)) {
 					statement.setInt(i + 1, Integer.valueOf(val));
-				}else
-				statement.setString(i + 1, val);
+				} else
+					statement.setString(i + 1, val);
 			}
 			System.out.println(statement);
 			System.err.println("************************************************");
@@ -97,7 +96,7 @@ public class MySQLAccess {
 			}
 			System.out.println(statement);
 			System.err.println("************************************************");
-			return statement.execute();
+			return statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

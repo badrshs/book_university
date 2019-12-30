@@ -55,7 +55,7 @@ public class CategoryButton extends JPanel {
 						if (status) {
 							Helper.showSuccess("deleted successfully");
 						} else {
-							Helper.showSuccess("issue accured :(");
+							Helper.showError("Can't delete the category, if this category contain any product, please remove them  and try again");
 						}
 					}
 				}

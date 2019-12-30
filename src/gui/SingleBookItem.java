@@ -37,8 +37,9 @@ public class SingleBookItem extends JPanel {
 		setLayout(null);
 
 		try {
-			BufferedImage image = ImageIO.read(
-					new File("C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg"));
+			File parentPath = new File("").getAbsoluteFile();
+			String imageUrl = parentPath + "\\images\\" + book.photo;
+			BufferedImage image = ImageIO.read(new File(imageUrl));
 
 			JPanel panel = new JPanel();
 			panel.setBackground(Color.WHITE);
@@ -89,13 +90,12 @@ public class SingleBookItem extends JPanel {
 			writer.setEditable(false);
 			writer.setBounds(59, 42, 204, 33);
 			panel.add(writer);
-			JLabel price = new JLabel(book.price+"$");
+			JLabel price = new JLabel(book.price + "$");
 			price.setHorizontalAlignment(SwingConstants.LEFT);
 			price.setFont(new Font("Tahoma", Font.BOLD, 20));
 			price.setBounds(65, 73, 79, 28);
 			panel.add(price);
-			Component img = Helper.GenerateImage(
-					"C:\\Users\\bader\\eclipse-workspace\\library-master\\images\\001-1-254x377@2x.jpg", 275, 138);
+			Component img = Helper.GenerateImage(book.photo, 275, 138);
 			img.setBounds(0, 0, 275, 138);
 			add(img);
 

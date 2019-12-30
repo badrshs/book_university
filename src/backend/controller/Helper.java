@@ -26,6 +26,9 @@ public class Helper {
 	public static Component GenerateImage(String imageUrl, int width, int height) {
 
 		try {
+			
+			File parentPath = new File("").getAbsoluteFile();
+			imageUrl = parentPath+"\\images\\"+imageUrl;
 			BufferedImage bufferedImage = ImageIO.read(new File(imageUrl));
 			JLabel image = new JLabel("Image");
 			image.setBounds(0, 0, width, height);
